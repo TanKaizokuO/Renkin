@@ -30,11 +30,11 @@ export async function initProject() {
   const rl = readline.createInterface({ input, output });
 
   try {
-    console.log('\\n--- design_skill Init ---');
+    console.log('\n--- design_skill Init ---');
     const goal = await rl.question('What is the main objective of this project? ');
     const audience = await rl.question('Who are the target users? ');
-    const brand = await rl.question('What is the brand\\'s personality? (e.g., playful, corporate, minimalist): ');
-    const typography = await rl.question('Describe the typographic feeling you\\'re after (e.g., editorial serif, technical monospace): ');
+    const brand = await rl.question('What is the brand\'s personality? (e.g., playful, corporate, minimalist): ');
+    const typography = await rl.question('Describe the typographic feeling you\'re after (e.g., editorial serif, technical monospace): ');
     
     let color = '';
     while (true) {
@@ -89,7 +89,7 @@ ${color}
     fs.renameSync(productTmpPath, path.join(cwd, 'PRODUCT.md'));
     fs.renameSync(designTmpPath, path.join(cwd, 'DESIGN.md'));
     
-    console.log('\\nSuccessfully created PRODUCT.md and DESIGN.md.');
+    console.log('\nSuccessfully created PRODUCT.md and DESIGN.md.');
   } catch (err) {
     console.error('Error during init:', err);
   } finally {
