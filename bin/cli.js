@@ -4,6 +4,8 @@ import fs from 'fs';
 import path from 'path';
 import { initProject } from '../src/init.js';
 import { runAudit } from '../src/audit.js';
+import { runIterationCommand } from '../src/iteration.js';
+import { runExtract, runDocument } from '../src/extraction.js';
 import { getValidCommands, generateHelpTable } from '../src/commands.js';
 
 function main() {
@@ -26,7 +28,7 @@ function main() {
   if (command !== 'init') {
     const cwd = process.cwd();
     const productPath = path.join(cwd, 'PRODUCT.md');
-    
+
     let isInitialized = false;
     if (fs.existsSync(productPath)) {
       const productContent = fs.readFileSync(productPath, 'utf-8');
@@ -34,7 +36,7 @@ function main() {
         isInitialized = true;
       }
     }
-    
+
     if (!isInitialized) {
       console.error(`Error: Missing Context. Please run 'design_skill init' to establish the foundational design context first.`);
       process.exit(1);
@@ -46,6 +48,15 @@ function main() {
   } else if (command === 'audit') {
     const target = args[1];
     runAudit(target);
+  } else if (['shape', 'bolder', 'quieter', 'polish', 'animate', 'colorize'].includes(command)) {
+    const target = args[1];
+    runIterationCommand(command, target);
+  } else if (command === 'extract') {
+    const target = args[1] || process.cwd();
+    runExtract(target);
+  } else if (command === 'document') {
+    const target = args[1] || process.cwd();
+    runDocument(target);
   } else {
     // Dispatch stubs for all other valid commands
     console.log(`Command '${command}' is not yet implemented.`);

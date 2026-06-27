@@ -1,9 +1,11 @@
-const stripComments = (line) => {
-  // Strip single-line JS/TS comments
-  let cleaned = line.replace(/\/\/.*$/, '');
-  // Strip single-line CSS block comments
-  cleaned = cleaned.replace(/\/\*.*?\*\//g, '');
-  return cleaned;
+(function() {
+const getCleanedLines = (content) => {
+  let cleaned = content.replace(/\/\*[\s\S]*?\*\//g, (match) => {
+    const newlines = match.match(/\n/g);
+    return newlines ? newlines.join('') : '';
+  });
+  cleaned = cleaned.replace(/\/\/.*$/gm, '');
+  return cleaned.split(/\r?\n/);
 };
 
 const ALL_EXTENSIONS = ['.css', '.scss', '.sass', '.js', '.jsx', '.ts', '.tsx', '.html', '.vue', '.svelte'];
@@ -16,10 +18,10 @@ const rules = [
     evaluate: (content, lines) => {
       const matches = [];
       const regex = /#000000|#000\b|rgb\(\s*0\s*,\s*0\s*,\s*0\s*\)/i;
-      lines.forEach((line, index) => {
-        const cleaned = stripComments(line);
+      const cleanedLines = getCleanedLines(content);
+      cleanedLines.forEach((cleaned, index) => {
         if (regex.test(cleaned)) {
-          matches.push({ line: index + 1, snippet: line.trim() });
+          matches.push({ line: index + 1, snippet: lines[index].trim() });
         }
       });
       return matches;
@@ -33,10 +35,10 @@ const rules = [
     evaluate: (content, lines) => {
       const matches = [];
       const regex = /font-family\s*:\s*[^;]*['"]?Inter['"]?/i;
-      lines.forEach((line, index) => {
-        const cleaned = stripComments(line);
+      const cleanedLines = getCleanedLines(content);
+      cleanedLines.forEach((cleaned, index) => {
         if (regex.test(cleaned)) {
-          matches.push({ line: index + 1, snippet: line.trim() });
+          matches.push({ line: index + 1, snippet: lines[index].trim() });
         }
       });
       return matches;
@@ -49,10 +51,10 @@ const rules = [
     evaluate: (content, lines) => {
       const matches = [];
       const regex = /cubic-bezier\(\s*0\.175\s*,\s*0\.885\s*,\s*0\.32\s*,\s*1\.275\s*\)/;
-      lines.forEach((line, index) => {
-        const cleaned = stripComments(line);
+      const cleanedLines = getCleanedLines(content);
+      cleanedLines.forEach((cleaned, index) => {
         if (regex.test(cleaned)) {
-          matches.push({ line: index + 1, snippet: line.trim() });
+          matches.push({ line: index + 1, snippet: lines[index].trim() });
         }
       });
       return matches;
@@ -65,10 +67,10 @@ const rules = [
     evaluate: (content, lines) => {
       const matches = [];
       const regex = /#0000ff\b|\bcolor\s*:\s*blue\b/i;
-      lines.forEach((line, index) => {
-        const cleaned = stripComments(line);
+      const cleanedLines = getCleanedLines(content);
+      cleanedLines.forEach((cleaned, index) => {
         if (regex.test(cleaned)) {
-          matches.push({ line: index + 1, snippet: line.trim() });
+          matches.push({ line: index + 1, snippet: lines[index].trim() });
         }
       });
       return matches;
@@ -89,4 +91,5 @@ for (let i = 5; i <= 44; i++) {
   });
 }
 
-export default rules;
+globalThis.DesignRules = rules;
+})();

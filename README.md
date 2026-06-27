@@ -48,3 +48,21 @@ design_skill audit <target-directory>
 # Example: design_skill audit ./src
 ```
 If no target is provided, it defaults to looking for a `./src` directory. Exit code is `1` if violations are found, `0` if clean.
+
+### 3. Browser Extension (Live DOM Audit)
+The `design_skill` detector engine can also run directly in your browser to catch runtime anti-patterns (such as computed styles or dynamic classes) that static analysis cannot see.
+
+To install the extension:
+1. Run the build script to generate the extension package:
+   ```bash
+   node bin/build-ext.js
+   ```
+2. Open Google Chrome or Chromium edge and navigate to `chrome://extensions`.
+3. Enable **Developer mode** (top right corner).
+4. Click **Load unpacked** and select the generated `dist/extension/` directory in this repository.
+
+To use the extension:
+- Navigate to your local development server (e.g., `http://localhost:3000`).
+- Click the `Design Skill Audit` icon in your browser toolbar to toggle the audit on/off.
+- Any violating elements will be outlined with a red bounding box.
+- Hover over the red `!` badge in the corner of the box to see the specific design anti-pattern rule that failed.

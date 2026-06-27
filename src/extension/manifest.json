@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Design Skill Audit",
+  "version": "1.0.0",
+  "description": "Live DOM detector for design anti-patterns.",
+  "permissions": ["scripting"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Toggle Design Audit"
+  }
+}
