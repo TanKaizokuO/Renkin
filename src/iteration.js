@@ -10,7 +10,7 @@ export function runIterationCommand(command, targetDir) {
       target = './src';
     } else {
       console.error('Error: No target directory specified and ./src does not exist.');
-      console.error(`Usage: design_skill ${command} <target>`);
+      console.error(`Usage: renkin ${command} <target>`);
       process.exit(2);
     }
   }
@@ -80,7 +80,7 @@ export function runIterationCommand(command, targetDir) {
   console.log(`${instruction}\n`);
   console.log(`3. VERIFICATION (MANDATORY POST-STEP):`);
   console.log(`After you have applied these changes, you MUST run the following command to verify that no anti-patterns were introduced:`);
-  console.log(`npx design_skill audit ${target}`);
+  console.log(`npx renkin audit ${target}`);
   console.log(`----------------------------------------------\n`);
   console.log(`Running pre-iteration audit on target...`);
 

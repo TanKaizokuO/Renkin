@@ -32,13 +32,13 @@ function main() {
     let isInitialized = false;
     if (fs.existsSync(productPath)) {
       const productContent = fs.readFileSync(productPath, 'utf-8');
-      if (productContent.includes('design_skill_initialized: true')) {
+      if (productContent.includes('renkin_initialized: true')) {
         isInitialized = true;
       }
     }
 
     if (!isInitialized) {
-      console.error(`Error: Missing Context. Please run 'design_skill init' to establish the foundational design context first.`);
+      console.error(`Error: Missing Context. Please run 'renkin init' to establish the foundational design context first.`);
       process.exit(1);
     }
   }

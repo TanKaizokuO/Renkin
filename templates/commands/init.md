@@ -1,6 +1,6 @@
-# `/design_skill init` Command Instructions
+# `/renkin init` Command Instructions
 
-When the user invokes `/design_skill init`, your goal is to gather project requirements and populate `PRODUCT.md` and `DESIGN.md`.
+When the user invokes `/renkin init`, your goal is to gather project requirements and populate `PRODUCT.md` and `DESIGN.md`.
 
 ## Workflow
 1. Ask the user the following questions sequentially (or all at once if appropriate):
@@ -14,6 +14,6 @@ When the user invokes `/design_skill init`, your goal is to gather project requi
 4. **IMPORTANT**: In `PRODUCT.md`, you MUST include the YAML frontmatter block at the very top:
    ```yaml
    ---
-   design_skill_initialized: true
+   renkin_initialized: true
    ---
    ```

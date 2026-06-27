@@ -10,8 +10,8 @@ const __dirname = path.dirname(__filename);
 export async function initProject() {
   const cwd = process.cwd();
   
-  // Create .design_skill directory and copy skill.md
-  const destSkillDir = path.join(cwd, '.design_skill');
+  // Create .renkin directory and copy skill.md
+  const destSkillDir = path.join(cwd, '.renkin');
   const destSkillPath = path.join(destSkillDir, 'skill.md');
   const templatesDir = path.join(__dirname, '..', 'templates');
   const skillTplPath = path.join(templatesDir, 'skill.md');
@@ -22,15 +22,15 @@ export async function initProject() {
   
   if (!fs.existsSync(destSkillPath)) {
     fs.copyFileSync(skillTplPath, destSkillPath);
-    console.log('Created .design_skill/skill.md');
+    console.log('Created .renkin/skill.md');
   } else {
-    console.log('.design_skill/skill.md already exists, skipping.');
+    console.log('.renkin/skill.md already exists, skipping.');
   }
 
   const rl = readline.createInterface({ input, output });
 
   try {
-    console.log('\n--- design_skill Init ---');
+    console.log('\n--- Renkin Init ---');
     const goal = await rl.question('What is the main objective of this project? ');
     const audience = await rl.question('Who are the target users? ');
     const brand = await rl.question('What is the brand\'s personality? (e.g., playful, corporate, minimalist): ');
@@ -48,7 +48,7 @@ export async function initProject() {
 
     // Write PRODUCT.tmp
     const productContent = `---
-design_skill_initialized: true
+renkin_initialized: true
 ---
 
 # PRODUCT.md
