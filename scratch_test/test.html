@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Test Page</title>
+  <style>
+    @font-face {
+      font-family: 'MyFont';
+      src: url('myfont.woff2') format('woff2');
+    }
+    .container {
+      width: 600px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Test</h1>
+    <img src="test.jpg" alt="test image">
+    <!-- missing lazy load -->
+    <!-- jsdom should also catch a11y issues if any, for example html lang="en" is there, but maybe color contrast? -->
+    <button>Click</button> <!-- a11y issue: empty button or low contrast -->
+  </div>
+</body>
+</html>
