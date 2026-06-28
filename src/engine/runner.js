@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import './rules.js';
-import { detect } from './detector.mjs';
 
 const rules = globalThis.DesignRules;
 export function walkDir(dir, fileList = []) {
@@ -20,33 +19,23 @@ export function walkDir(dir, fileList = []) {
   return fileList;
 }
 
-export function evaluateContent(content, ext) {
-  // Pass content as html parameter for now; document/window are null in CLI context
-  const rawFindings = detect(content, null, null);
+export function evaluateContent(content, ext, file) {
   const findings = [];
 
-  for (const finding of rawFindings) {
-    const ruleMetadata = rules.find(r => r.id === finding.id);
-    if (ruleMetadata) {
-      findings.push({
-        ruleId: finding.id,
-        line: finding.line || 1,
-        snippet: finding.snippet || '',
-        name: ruleMetadata.name,
-        message: ruleMetadata.message,
-        severity: ruleMetadata.severity,
-        category: ruleMetadata.category
-      });
-    } else {
-      findings.push({
-        ruleId: finding.id,
-        line: finding.line || 1,
-        snippet: finding.snippet || '',
-        name: 'Unknown Rule',
-        message: 'No metadata found for this rule.',
-        severity: finding.severity || 'warning',
-        category: 'unknown'
-      });
+  for (const rule of rules) {
+    if (typeof rule.evaluate === 'function') {
+      const matches = rule.evaluate(content, file);
+      for (const match of matches) {
+        findings.push({
+          ruleId: rule.id,
+          line: match.line,
+          snippet: match.snippet || '',
+          name: rule.name,
+          message: match.message || rule.message,
+          severity: rule.severity,
+          category: rule.category
+        });
+      }
     }
   }
 
@@ -67,7 +56,7 @@ export function runEngine(targetDir) {
     const ext = path.extname(file).toLowerCase();
     const content = fs.readFileSync(file, 'utf-8');
     
-    const fileFindings = evaluateContent(content, ext);
+    const fileFindings = evaluateContent(content, ext, file);
     for (const finding of fileFindings) {
       findings.push({
         ...finding,
