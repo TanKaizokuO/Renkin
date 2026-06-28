@@ -48,7 +48,7 @@ function main() {
   } else if (command === 'audit') {
     const target = args[1];
     runAudit(target);
-  } else if (['shape', 'bolder', 'quieter', 'polish', 'animate', 'colorize'].includes(command)) {
+  } else if (['shape', 'bolder', 'quieter', 'polish', 'animate', 'colorize', 'tokens', 'simplify', 'modernize', 'contrast', 'scale', 'space', 'dark', 'focus', 'responsive', 'brand', 'reset'].includes(command)) {
     const target = args[1];
     runIterationCommand(command, target);
   } else if (command === 'extract') {
