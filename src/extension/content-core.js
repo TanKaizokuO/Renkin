@@ -17,7 +17,7 @@
     return root;
   }
 
-  function createOverlay(element, rule, domRule) {
+  function createOverlay(element, rule, result) {
     const overlay = document.createElement('div');
     overlay.className = 'design-audit-overlay';
 
@@ -34,7 +34,7 @@
 
     const tooltipDesc = document.createElement('span');
     tooltipDesc.className = 'design-audit-tooltip-desc';
-    tooltipDesc.innerText = rule.description;
+    tooltipDesc.innerText = (result && result.message) ? result.message : rule.description;
 
     tooltip.appendChild(tooltipId);
     tooltip.appendChild(tooltipDesc);
@@ -70,8 +70,11 @@
 
       for (const rule of rules) {
         const evaluateDOM = domRules[rule.id];
-        if (evaluateDOM && evaluateDOM(node)) {
-          createOverlay(node, rule, evaluateDOM);
+        if (evaluateDOM) {
+          const result = evaluateDOM(node);
+          if (result) {
+            createOverlay(node, rule, result);
+          }
         }
       }
     }
