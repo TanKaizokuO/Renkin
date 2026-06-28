@@ -11,18 +11,18 @@ export const commands = [
   { name: 'extract', description: 'Extract UI tokens and components to the design system.' },
   { name: 'document', description: 'Generate DESIGN.md from an undocumented codebase.' },
   // Undecided slots
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null },
-  { name: null, description: null }
+  { name: 'quieter', description: 'Make the design more restrained and subtle (opposite of bolder)' },
+  { name: 'tokens', description: 'Output all design tokens to a centralized tokens.css file' },
+  { name: 'simplify', description: 'Reduce visual complexity by removing decorative noise' },
+  { name: 'modernize', description: 'Replace dated patterns with current design conventions' },
+  { name: 'contrast', description: 'Improve contrast ratios across all text and UI elements' },
+  { name: 'scale', description: 'Adjust typographic scale and size relationships' },
+  { name: 'space', description: 'Refine whitespace, padding, and vertical rhythm' },
+  { name: 'dark', description: 'Adapt or generate a dark mode variant of the design' },
+  { name: 'focus', description: 'Improve focus states and keyboard navigation affordances' },
+  { name: 'responsive', description: 'Improve mobile layout and breakpoint behavior' },
+  { name: 'brand', description: 'Apply or reinforce brand identity elements from PRODUCT.md' },
+  { name: 'reset', description: 'Clear PRODUCT.md, DESIGN.md and prompt re-initialization' }
 ];
 
 export function getValidCommands() {

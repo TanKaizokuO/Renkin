@@ -58,7 +58,41 @@ export function runIterationCommand(command, targetDir) {
     colorize: `Apply colors according to brand guidelines:
 - Read the Colors section from DESIGN.md and generate a full semantic palette.
 - The AI must ONLY apply colors by referencing or creating '--ds-*' prefixed CSS custom properties.
-- Never use inline hex values or bare framework color classes.`
+- Never use inline hex values or bare framework color classes.`,
+    tokens: `Output all design tokens to a centralized tokens.css file:
+- Scan the target directory for colors, fonts, and spacing.
+- Generate a tokens.css file with CSS variables mapping to semantic token names.`,
+    simplify: `Reduce visual complexity by removing decorative noise:
+- Remove unnecessary borders, box-shadows, and background patterns.
+- Flatten nested containers and rely on whitespace for separation.`,
+    modernize: `Replace dated patterns with current design conventions:
+- Update heavy gradients to subtle ones or flat colors.
+- Use rounded corners, larger text, and modern structural properties (e.g., flex gap).`,
+    contrast: `Improve contrast ratios across all text and UI elements:
+- Ensure body text meets at least 4.5:1 against its background.
+- Ensure large text and UI components meet at least 3.0:1.
+- Avoid light gray text on white backgrounds.`,
+    scale: `Adjust typographic scale and size relationships:
+- Establish a clear modular typographic scale (e.g., base 16px, 1.25 ratio).
+- Differentiate heading levels (H1 vs H2 vs H3) clearly by weight and size.`,
+    space: `Refine whitespace, padding, and vertical rhythm:
+- Use consistent padding and margins based on an 8px grid system.
+- Increase padding on cards and buttons to give elements breathing room.`,
+    dark: `Adapt or generate a dark mode variant of the design:
+- Invert background colors to dark grays (e.g., #111 or #18181b) and text to off-white.
+- Reduce saturation of accent colors to avoid eye strain.`,
+    focus: `Improve focus states and keyboard navigation affordances:
+- Add high-contrast :focus-visible outlines to all interactive elements.
+- Ensure focus rings are not clipped by overflow:hidden containers.`,
+    responsive: `Improve mobile layout and breakpoint behavior:
+- Convert fixed widths to percentages or use max-width.
+- Stack horizontal flex/grid layouts vertically on smaller screens.
+- Ensure tap targets are at least 48x48px on mobile.`,
+    brand: `Apply or reinforce brand identity elements from PRODUCT.md:
+- Integrate core brand colors as primary accents throughout the UI.
+- Apply brand-specific typography and border radiuses.`,
+    reset: `Clear PRODUCT.md, DESIGN.md and prompt re-initialization:
+- Inform the user to delete PRODUCT.md and DESIGN.md manually and then run 'renkin init'.`
   };
 
   const instruction = prompts[command];
