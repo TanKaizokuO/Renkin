@@ -10,7 +10,7 @@ export function runIterationCommand(command, targetDir) {
       target = './src';
     } else {
       console.error('Error: No target directory specified and ./src does not exist.');
-      console.error(`Usage: renkin ${command} <target>`);
+      console.error(`Usage: RENKIN ${command} <target>`);
       process.exit(2);
     }
   }
@@ -100,7 +100,7 @@ export function runIterationCommand(command, targetDir) {
 - Integrate core brand colors as primary accents throughout the UI.
 - Apply brand-specific typography and border radiuses.`,
     reset: `Clear PRODUCT.md, DESIGN.md and prompt re-initialization:
-- Inform the user to delete PRODUCT.md and DESIGN.md manually and then run 'renkin init'.`
+- Inform the user to delete PRODUCT.md and DESIGN.md manually and then run 'RENKIN init'.`
   };
 
   const instruction = prompts[command];
@@ -122,7 +122,7 @@ export function runIterationCommand(command, targetDir) {
   console.log(`${instruction}\n`);
   console.log(`3. VERIFICATION (MANDATORY POST-STEP):`);
   console.log(`After you have applied these changes, you MUST run the following command to verify that no anti-patterns were introduced:`);
-  console.log(`npx renkin audit ${target}`);
+  console.log(`npx RENKIN audit ${target}`);
   console.log(`----------------------------------------------\n`);
   console.log(`Running pre-iteration audit on target...`);
 

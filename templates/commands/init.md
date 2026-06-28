@@ -1,6 +1,6 @@
-# `/renkin init` Command Instructions
+# `/RENKIN init` Command Instructions
 
-When the user invokes `/renkin init`, your goal is to gather project requirements and populate `PRODUCT.md` and `DESIGN.md`.
+When the user invokes `/RENKIN init`, your goal is to gather project requirements and populate `PRODUCT.md` and `DESIGN.md`.
 
 ## Workflow
 1. Ask the user the following questions sequentially (or all at once if appropriate):
@@ -14,6 +14,6 @@ When the user invokes `/renkin init`, your goal is to gather project requirement
 4. **IMPORTANT**: In `PRODUCT.md`, you MUST include the YAML frontmatter block at the very top:
    ```yaml
    ---
-   renkin_initialized: true
+   RENKIN_initialized: true
    ---
    ```

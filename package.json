@@ -1,11 +1,11 @@
 {
   "name": "renkin",
   "version": "1.0.0",
-  "description": "Renkin CLI tool for generating premium web frontends",
+  "description": "RENKIN CLI tool for generating premium web frontends",
   "main": "index.js",
   "type": "module",
   "bin": {
-    "renkin": "./bin/cli.js"
+    "RENKIN": "./bin/cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

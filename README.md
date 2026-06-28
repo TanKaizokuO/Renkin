@@ -1,4 +1,4 @@
-# Renkin
+# RENKIN
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![License](https://img.shields.io/badge/license-ISC-green.svg)
@@ -23,7 +23,7 @@
 
 ## About the Project
 
-Renkin is a CLI tool that helps developers generate and iterate on premium web frontends. It works by keeping application state and contextual memory in stateless, localized Markdown files (`PRODUCT.md` and `DESIGN.md`) in your working directory. This codified context ensures your frontend remains polished and consistent across iterations.
+RENKIN is a CLI tool that helps developers generate and iterate on premium web frontends. It works by keeping application state and contextual memory in stateless, localized Markdown files (`PRODUCT.md` and `DESIGN.md`) in your working directory. This codified context ensures your frontend remains polished and consistent across iterations.
 
 ## Features
 
@@ -80,7 +80,7 @@ Ensure you have the following installed:
 Before using advanced commands in any target directory, you must run the initialization command to establish the foundational design context.
 
 ```bash
-renkin init
+RENKIN init
 ```
 
 This will interactively prompt you and generate `PRODUCT.md` and `DESIGN.md` in your current working directory. You can then use other commands to interact with or modify the frontend.

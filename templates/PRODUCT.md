@@ -1,5 +1,5 @@
 ---
-renkin_initialized: true
+renkintialized: true
 ---
 
 # PRODUCT.md

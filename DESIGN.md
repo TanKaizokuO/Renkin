@@ -1,5 +1,5 @@
 ---
-renkin_initialized: true
+RENKIN_initialized: true
 ---
 
 # Design System

@@ -13,7 +13,7 @@ export async function runAudit(targetDir) {
       target = './src';
     } else {
       console.error('Error: No target directory specified and ./src does not exist.');
-      console.error('Usage: renkin audit <target>');
+      console.error('Usage: RENKIN audit <target>');
       process.exit(2);
     }
   }
