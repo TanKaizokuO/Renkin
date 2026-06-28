@@ -58,6 +58,121 @@ function scanDirectoryForTokens(targetDir) {
   };
 }
 
+function extractComponents(targetDir) {
+  const files = walkDir(targetDir);
+  const componentCounts = {
+    Buttons: {},
+    Cards: {},
+    Modals: {},
+    Navigation: {},
+    Badges: {},
+    FormFields: {}
+  };
+  
+  const componentFiles = {
+    Buttons: {},
+    Cards: {},
+    Modals: {},
+    Navigation: {},
+    Badges: {},
+    FormFields: {}
+  };
+
+  const addComponent = (category, signature, file) => {
+    if (!componentCounts[category][signature]) {
+      componentCounts[category][signature] = 0;
+      componentFiles[category][signature] = new Set();
+    }
+    componentCounts[category][signature]++;
+    componentFiles[category][signature].add(file);
+  };
+
+  for (const file of files) {
+    const ext = path.extname(file).toLowerCase();
+    if (!['.html', '.jsx', '.tsx', '.vue'].includes(ext)) continue;
+    
+    const content = fs.readFileSync(file, 'utf-8');
+    
+    const tagRegex = /<([a-zA-Z0-9\-]+)([^>]*)>/g;
+    let match;
+    while ((match = tagRegex.exec(content)) !== null) {
+      const tag = match[1].toLowerCase();
+      const attrs = match[2];
+      
+      let classNames = '';
+      const classMatch = /class(?:Name)?=["']([^"']+)["']/i.exec(attrs);
+      if (classMatch) {
+        classNames = classMatch[1].trim();
+      }
+      
+      const classList = classNames.split(/\s+/).filter(Boolean);
+      const signature = classNames ? `${tag}.${classList.join('.')}` : tag;
+      
+      if (tag === 'button' || classList.some(c => c.includes('btn') || c.includes('button'))) {
+        addComponent('Buttons', signature, file);
+      }
+      
+      if (tag === 'div' && classList.some(c => c.includes('card'))) {
+        addComponent('Cards', signature, file);
+      }
+      
+      if (classList.some(c => c.includes('modal') || c.includes('dialog') || c.includes('overlay'))) {
+        addComponent('Modals', signature, file);
+      }
+      
+      if (tag === 'nav' || classList.some(c => c.includes('nav') || c.includes('navbar'))) {
+        addComponent('Navigation', signature, file);
+      }
+      
+      if (classList.some(c => c.includes('badge') || c.includes('pill') || c.includes('tag') || c.includes('chip'))) {
+        addComponent('Badges', signature, file);
+      }
+      
+      if (['input', 'select', 'textarea'].includes(tag)) {
+        addComponent('FormFields', signature, file);
+      }
+    }
+  }
+
+  const filteredCards = {};
+  for (const [sig, count] of Object.entries(componentCounts.Cards)) {
+    if (count >= 3) {
+      filteredCards[sig] = count;
+    }
+  }
+  componentCounts.Cards = filteredCards;
+
+  const results = {};
+  for (const category of Object.keys(componentCounts)) {
+    let totalCount = 0;
+    let maxCount = 0;
+    let bestSignature = null;
+    const allFiles = new Set();
+    
+    for (const [sig, count] of Object.entries(componentCounts[category])) {
+      totalCount += count;
+      if (count > maxCount) {
+        maxCount = count;
+        bestSignature = sig;
+      }
+      for (const f of componentFiles[category][sig]) {
+        allFiles.add(f);
+      }
+    }
+    
+    if (bestSignature) {
+      results[category] = {
+        name: category,
+        count: totalCount,
+        signature: bestSignature,
+        files: Array.from(allFiles)
+      };
+    }
+  }
+
+  return results;
+}
+
 export function runExtract(targetDir) {
   if (!fs.existsSync(targetDir)) {
     console.error(`Error: Directory ${targetDir} does not exist.`);
@@ -84,6 +199,19 @@ export function runExtract(targetDir) {
 
   cssContent += '}\n';
 
+  const components = extractComponents(targetDir);
+  if (Object.keys(components).length > 0) {
+    cssContent += '\n/* Components */\n';
+    for (const comp of Object.values(components)) {
+      cssContent += `/* ${comp.name} - Found ${comp.count} instances */\n`;
+      cssContent += `/* Signature: ${comp.signature} */\n`;
+      cssContent += `/* Files: ${comp.files.map(f => path.basename(f)).join(', ')} */\n\n`;
+    }
+  }
+
+  const outPath = path.join(process.cwd(), 'tokens.css');
+  fs.writeFileSync(outPath, cssContent, 'utf-8');
+
   const findings = evaluateContent(cssContent, '.css');
   if (findings.length > 0) {
     console.error('Extraction failed: Generated tokens contain design anti-patterns.');
@@ -93,8 +221,6 @@ export function runExtract(targetDir) {
     process.exit(1);
   }
 
-  const outPath = path.join(process.cwd(), 'tokens.css');
-  fs.writeFileSync(outPath, cssContent, 'utf-8');
   console.log(`Successfully extracted tokens to ${outPath}`);
 }
 
