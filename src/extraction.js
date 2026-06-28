@@ -89,7 +89,7 @@ function extractComponents(targetDir) {
 
   for (const file of files) {
     const ext = path.extname(file).toLowerCase();
-    if (!['.html', '.jsx', '.tsx', '.vue'].includes(ext)) continue;
+    if (!['.html', '.jsx', '.tsx', '.vue', '.js', '.mjs'].includes(ext)) continue;
     
     const content = fs.readFileSync(file, 'utf-8');
     
